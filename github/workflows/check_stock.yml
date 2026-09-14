@@ -1,0 +1,41 @@
+name: Check Apple Refurbished Stock
+
+on:
+  schedule:
+    # 10分おきに実行（UTC基準）。
+    # ※GitHub側の混雑状況により数分の遅延が発生することがあります。
+    - cron: '*/10 * * * *'
+  # GitHubの画面から手動テスト実行できるようにする
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          LINE_ACCESS_TOKEN: ${{ secrets.LINE_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+        run: |
+          python main.py
+
+      - name: Commit and push cache if updated
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add stock_cache.json
+          # 差分がある場合のみコミット
+          git diff --staged --quiet || (git commit -m "Update stock cache [skip ci]" && git push)
