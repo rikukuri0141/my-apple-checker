@@ -2,7 +2,9 @@ name: Check Apple Refurbished Stock
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    # 日本時間 8:00 〜 22:59 の間、5分おきに実行 (UTC 23:00 〜 13:59)
+    - cron: '*/5 23,0-13 * * *'
+  # GitHub画面からの手動実行ボタン
   workflow_dispatch:
 
 jobs:
