@@ -61,6 +61,11 @@ def main():
   current = get_current_stock()
   print(f"Total refurbished iPhones currently in store: {len(current)}")
 
+    # 取得した全商品名をすべてログに出力して確認
+  for title in current.keys():
+    print(f"[STORE ITEM] {title}")
+
+    
   # キャッシュ（前回の在庫一覧）の読み込み
   if os.path.exists(CACHE_FILE):
     with open(CACHE_FILE, "r", encoding="utf-8") as f:
