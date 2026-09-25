@@ -17,7 +17,7 @@ HEADERS = {
 }
 
 # 監視対象: iPhone 16e または 17e
-TARGET_PATTERN = re.compile(r"iphone\s*(15|16e|17e)", re.IGNORECASE)
+TARGET_PATTERN = re.compile(r"iphone\s*(16e|17e)", re.IGNORECASE)
 
 
 def is_target_model(title: str) -> bool:
