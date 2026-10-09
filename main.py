@@ -18,7 +18,6 @@ HEADERS = {
 }
 
 # 判定パターン
-PATTERN_15_16_128GB = re.compile(r"iphone\s*(15)\s+128gb", re.IGNORECASE)
 PATTERN_E_SERIES = re.compile(r"iphone\s*(16e|17e)", re.IGNORECASE)
 
 
@@ -26,10 +25,6 @@ def is_target_model(title: str) -> bool:
   # Pro, Pro Max, Plus などの派生モデルを除外
   if re.search(r"\b(pro|plus|max)\b", title, re.IGNORECASE):
     return False
-
-  # iPhone 15/16 (128GB)
-  if PATTERN_15_16_128GB.search(title):
-    return True
 
   # iPhone 16e/17e (全容量)
   if PATTERN_E_SERIES.search(title):
